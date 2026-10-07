@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="theme-color" content="#050505" />
+		<title>Eyo — Birthday Protocol</title>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800;900&family=Share+Tech+Mono&display=swap"
+			rel="stylesheet" />
+
+		<link rel="stylesheet" href="style.css" />
+	</head>
+
+	<body>
+		<!-- Ambient background -->
+		<div class="noise"></div>
+		<div class="scanlines"></div>
+
+		<!-- MUSIC -->
+		<button
+			id="music-toggle"
+			class="music-toggle hidden"
+			aria-label="Toggle music">
+			<span class="music-icon">♫</span>
+			<span class="music-bars"> <i></i><i></i><i></i><i></i> </span>
+		</button>
+
+		<!-- =====================================================
+       SCENE 1 — SYSTEM BOOT
+  ====================================================== -->
+		<section id="scene-hacker" class="scene active">
+			<div class="terminal-grid"></div>
+
+			<div class="boot-container">
+				<div class="system-status">
+					<span class="status-dot"></span>
+					SECURE CONNECTION ESTABLISHED
+				</div>
+
+				<div class="terminal-window">
+					<div class="terminal-top">
+						<div class="terminal-dots">
+							<span></span>
+							<span></span>
+							<span></span>
+						</div>
+
+						<span>eyo_protocol.exe</span>
+
+						<span class="terminal-time" id="terminal-time"> 00:00:00 </span>
+					</div>
+
+					<div class="terminal-body">
+						<div id="hacker-text"></div>
+
+						<div class="boot-loader">
+							<div id="boot-progress"></div>
+						</div>
+
+						<div class="boot-percent">
+							SYSTEM STATUS <span id="boot-percent">0%</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="boot-title">
+					<span>CLASSIFIED</span>
+					<h1>BIRTHDAY<br /><strong>PROTOCOL</strong></h1>
+				</div>
+
+				<p class="boot-subtitle">
+					A special transmission has been detected.
+					<br />
+					Authorization required.
+				</p>
+
+				<button id="start-btn" class="main-btn">
+					<span>⚡</span>
+					INITIALIZE PROTOCOL
+					<b>→</b>
+				</button>
+
+				<div class="boot-footer">
+					<span>ENCRYPTION: AES-256</span>
+					<span>LEVEL: TOP SECRET</span>
+					<span>STATUS: WAITING</span>
+				</div>
+			</div>
+		</section>
+
+		<!-- =====================================================
+       SCENE 2 — DECRYPTION
+  ====================================================== -->
+		<section id="scene-decrypt" class="scene">
+			<img src="/image/photo.png" class="decrypt-photo" alt="Eyo" />
+
+			<div class="decrypt-vignette"></div>
+
+			<div class="decrypt-interface">
+				<div class="scan-header">
+					<div>
+						<span class="eyebrow">SECURITY LEVEL 09</span>
+						<h2>IDENTITY<br /><strong>VERIFICATION</strong></h2>
+					</div>
+
+					<div class="scan-icon">
+						<div class="scan-ring"></div>
+						<span>◉</span>
+					</div>
+				</div>
+
+				<div class="face-scan">
+					<div class="corner top-left"></div>
+					<div class="corner top-right"></div>
+					<div class="corner bottom-left"></div>
+					<div class="corner bottom-right"></div>
+
+					<div class="scan-line"></div>
+
+					<div class="target">
+						<span>BIOMETRIC TARGET</span>
+						<strong>EYO</strong>
+					</div>
+
+					<div class="scan-coordinates">
+						X: 09.4421<br />
+						Y: 04.2024
+					</div>
+				</div>
+
+				<div class="decrypt-panel">
+					<div class="decrypt-heading">
+						<span>FILE DECRYPTION</span>
+						<strong id="decrypt-percent">0%</strong>
+					</div>
+
+					<div class="decrypt-progress">
+						<div id="progress-bar"></div>
+					</div>
+
+					<div id="decrypt-lines" class="decrypt-lines"></div>
+				</div>
+
+				<button id="access-btn" class="access-btn hidden">
+					<span>ACCESS GRANTED</span>
+					<b>ENTER SYSTEM →</b>
+				</button>
+			</div>
+		</section>
+
+		<!-- =====================================================
+       SCENE 3 — BIRTHDAY REVEAL
+  ====================================================== -->
+		<section id="scene-reveal" class="scene">
+			<div class="hero">
+				<img src="/image/photo.png" class="hero-photo" alt="Eyo" />
+
+				<div class="hero-color"></div>
+				<div class="hero-vignette"></div>
+
+				<canvas id="particle-canvas"></canvas>
+				<canvas id="confetti-canvas"></canvas>
+
+				<!-- Floating labels -->
+				<div class="floating-label label-one"><span></span> SUBJECT: EYO</div>
+
+				<div class="floating-label label-two">100% LEGEND <span>✓</span></div>
+
+				<!-- HERO TEXT -->
+				<div class="hero-content">
+					<div class="hero-kicker">
+						<span></span>
+						TODAY IS THE DAY
+						<span></span>
+					</div>
+
+					<h1 class="birthday-title">
+						<span>HAPPY</span>
+						<span>BIRTHDAY</span>
+					</h1>
+
+					<div class="name-wrapper">
+						<div id="typing-name" class="name-text"></div>
+					</div>
+
+					<p class="hero-message">
+						Another year unlocked.<br />
+						Another level of greatness activated.
+					</p>
+				</div>
+
+				<!-- =================================================
+           COMMAND CENTER
+      ================================================== -->
+				<div id="command-center" class="command-center">
+					<div class="dashboard-header">
+						<div>
+							<span class="eyebrow">PERSONAL COMMAND CENTER</span>
+							<h2>WELCOME, <strong>EYO</strong></h2>
+						</div>
+
+						<div class="online-status"><i></i> ONLINE</div>
+					</div>
+
+					<!-- MONEY CARD -->
+					<article class="info-card money-card">
+						<div class="card-glow"></div>
+
+						<div class="card-top">
+							<div class="card-symbol">₦</div>
+
+							<div>
+								<span class="card-label">MISSION OBJECTIVE</span>
+								<h3>SEND LOVE 💸</h3>
+							</div>
+
+							<span class="card-number">01</span>
+						</div>
+
+						<div class="account-details">
+							<div>
+								<span>BANK</span>
+								<strong id="bank-name">Opay / Access Bank</strong>
+							</div>
+
+							<div>
+								<span>ACCOUNT NAME</span>
+								<strong id="acct-name">EYO THE LEGEND</strong>
+							</div>
+
+							<div class="account-number">
+								<span>ACCOUNT NUMBER</span>
+								<strong id="acct-num">0123456789</strong>
+							</div>
+						</div>
+
+						<button id="copy-acct-btn" class="card-btn">
+							<span>📋</span>
+							COPY ACCOUNT NUMBER
+						</button>
+					</article>
+
+					<!-- TIPS -->
+					<article class="info-card tips-card">
+						<div class="card-top">
+							<div class="card-symbol">⚡</div>
+
+							<div>
+								<span class="card-label">LEGENDARY KNOWLEDGE</span>
+								<h3>PRO TIPS FROM EYO</h3>
+							</div>
+
+							<span class="card-number">02</span>
+						</div>
+
+						<div class="tips-grid">
+							<div class="tip">
+								<span>01</span>
+								<p>
+									If you no get money, just hail me. But if you get, no dull.
+								</p>
+							</div>
+
+							<div class="tip">
+								<span>02</span>
+								<p>
+									Life is too short to argue with people who don't buy you food.
+								</p>
+							</div>
+
+							<div class="tip">
+								<span>03</span>
+								<p>Always look good. You never know who is taking a photo.</p>
+							</div>
+						</div>
+					</article>
+
+					<!-- QUOTE -->
+					<article class="info-card quote-card">
+						<div class="quote-mark">“</div>
+
+						<span class="card-label">SINGLE LIFE DATABASE</span>
+
+						<blockquote>
+							I'm not single because I'm lonely. I'm single because I'm too
+							legendary to be ordinary.
+						</blockquote>
+
+						<div class="quote-author">— EYO, THE LEGEND</div>
+					</article>
+
+					<!-- SHARE -->
+					<button id="share-btn" class="share-btn">
+						<span class="share-icon">↗</span>
+
+						<div>
+							<small>SPREAD THE CHAOS</small>
+							<strong>SHARE THIS STATUS</strong>
+						</div>
+
+						<b>→</b>
+					</button>
+
+					<div class="dashboard-footer">
+						BIRTHDAY PROTOCOL COMPLETE • EYO © 2026
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- AUDIO -->
+		<audio id="bg-music" loop preload="auto">
+			<source src="/music/birthday-song.mp3" type="audio/mpeg" />
+		</audio>
+
+		<script src="script.js"></script>
+	</body>
+</html>

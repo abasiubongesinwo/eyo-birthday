@@ -1,0 +1,1623 @@
+:root {
+	--green: #00ff66;
+	--green-dark: #00a83f;
+	--gold: #ffd21f;
+	--orange: #ff5c00;
+	--red: #ff1744;
+	--black: #030303;
+	--panel: rgba(8, 12, 10, 0.78);
+	--border: rgba(0, 255, 102, 0.25);
+	--white: #f5f5f5;
+	--muted: #8e9891;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	width: 100%;
+	min-height: 100%;
+	background: #000;
+	scroll-behavior: smooth;
+}
+
+body {
+	width: 100%;
+	min-height: 100vh;
+	background: #000;
+	color: white;
+	font-family: "Montserrat", sans-serif;
+	overflow-x: hidden;
+}
+
+button {
+	font-family: inherit;
+}
+
+button,
+a {
+	-webkit-tap-highlight-color: transparent;
+}
+
+.hidden {
+	display: none !important;
+}
+
+/* =========================================================
+   GLOBAL FX
+========================================================= */
+
+.noise {
+	position: fixed;
+	inset: 0;
+	z-index: 999;
+	pointer-events: none;
+	opacity: 0.035;
+	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+}
+
+.scanlines {
+	position: fixed;
+	inset: 0;
+	z-index: 998;
+	pointer-events: none;
+	opacity: 0.08;
+	background: repeating-linear-gradient(
+		to bottom,
+		transparent 0,
+		transparent 3px,
+		rgba(255, 255, 255, 0.04) 4px
+	);
+}
+
+.scene {
+	position: fixed;
+	inset: 0;
+	width: 100%;
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	visibility: hidden;
+	opacity: 0;
+	pointer-events: none;
+	transition:
+		opacity 0.8s ease,
+		visibility 0.8s ease;
+}
+
+.scene.active {
+	visibility: visible;
+	opacity: 1;
+	pointer-events: auto;
+}
+
+/* =========================================================
+   MUSIC BUTTON
+========================================================= */
+
+.music-toggle {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	z-index: 1000;
+
+	width: 54px;
+	height: 54px;
+
+	border: 1px solid rgba(0, 255, 102, 0.6);
+	border-radius: 50%;
+
+	color: var(--green);
+	background: rgba(0, 0, 0, 0.7);
+
+	backdrop-filter: blur(15px);
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+
+	cursor: pointer;
+
+	box-shadow:
+		0 0 25px rgba(0, 255, 102, 0.15),
+		inset 0 0 20px rgba(0, 255, 102, 0.05);
+
+	transition: 0.3s;
+}
+
+.music-toggle:hover {
+	transform: scale(1.08);
+	background: var(--green);
+	color: #000;
+}
+
+.music-icon {
+	font-size: 20px;
+}
+
+.music-bars {
+	display: flex;
+	gap: 2px;
+	height: 15px;
+	align-items: end;
+}
+
+.music-bars i {
+	width: 2px;
+	height: 5px;
+	background: currentColor;
+	animation: musicBar 0.6s infinite alternate;
+}
+
+.music-bars i:nth-child(2) {
+	animation-delay: 0.15s;
+}
+
+.music-bars i:nth-child(3) {
+	animation-delay: 0.3s;
+}
+
+.music-bars i:nth-child(4) {
+	animation-delay: 0.45s;
+}
+
+@keyframes musicBar {
+	to {
+		height: 14px;
+	}
+}
+
+/* =========================================================
+   SCENE 1 — HACKER
+========================================================= */
+
+#scene-hacker {
+	background:
+		radial-gradient(circle at center, rgba(0, 255, 102, 0.08), transparent 45%),
+		#020403;
+}
+
+.terminal-grid {
+	position: absolute;
+	inset: 0;
+
+	background-image:
+		linear-gradient(rgba(0, 255, 102, 0.04) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(0, 255, 102, 0.04) 1px, transparent 1px);
+
+	background-size: 45px 45px;
+
+	mask-image: linear-gradient(to bottom, black, transparent);
+}
+
+.boot-container {
+	position: relative;
+	z-index: 2;
+
+	width: min(920px, 92%);
+	text-align: center;
+}
+
+.system-status {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+
+	color: var(--green);
+	font:
+		11px "Share Tech Mono",
+		monospace;
+	letter-spacing: 2px;
+
+	margin-bottom: 20px;
+}
+
+.status-dot {
+	width: 7px;
+	height: 7px;
+	background: var(--green);
+	border-radius: 50%;
+	box-shadow: 0 0 12px var(--green);
+
+	animation: blink 1s infinite;
+}
+
+.terminal-window {
+	border: 1px solid rgba(0, 255, 102, 0.22);
+	background: rgba(0, 0, 0, 0.6);
+
+	box-shadow:
+		0 0 80px rgba(0, 255, 102, 0.05),
+		inset 0 0 40px rgba(0, 255, 102, 0.02);
+
+	text-align: left;
+}
+
+.terminal-top {
+	height: 38px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	padding: 0 15px;
+
+	border-bottom: 1px solid rgba(0, 255, 102, 0.15);
+
+	color: #718078;
+	font:
+		11px "Share Tech Mono",
+		monospace;
+}
+
+.terminal-dots {
+	display: flex;
+	gap: 6px;
+}
+
+.terminal-dots span {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: #25332b;
+}
+
+.terminal-dots span:first-child {
+	background: #ff4b4b;
+}
+
+.terminal-dots span:nth-child(2) {
+	background: #ffd43b;
+}
+
+.terminal-dots span:last-child {
+	background: var(--green);
+}
+
+.terminal-body {
+	min-height: 200px;
+	padding: 25px;
+
+	color: var(--green);
+
+	font:
+		13px/1.9 "Share Tech Mono",
+		monospace;
+
+	text-shadow: 0 0 10px rgba(0, 255, 102, 0.35);
+}
+
+#hacker-text {
+	min-height: 120px;
+}
+
+.boot-loader {
+	width: 100%;
+	height: 3px;
+	margin-top: 18px;
+	background: rgba(0, 255, 102, 0.08);
+}
+
+#boot-progress {
+	height: 100%;
+	width: 0;
+	background: var(--green);
+	box-shadow: 0 0 15px var(--green);
+	transition: width 0.15s linear;
+}
+
+.boot-percent {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 8px;
+	color: #597064;
+	font-size: 10px;
+}
+
+#boot-percent {
+	color: var(--green);
+}
+
+.boot-title {
+	margin-top: 42px;
+}
+
+.boot-title > span {
+	color: var(--green);
+	font:
+		12px "Share Tech Mono",
+		monospace;
+	letter-spacing: 8px;
+}
+
+.boot-title h1 {
+	margin-top: 8px;
+
+	font:
+		700 clamp(3rem, 9vw, 7rem)/0.8 "Bebas Neue",
+		sans-serif;
+	letter-spacing: 3px;
+
+	text-shadow: 0 0 30px rgba(255, 255, 255, 0.08);
+}
+
+.boot-title strong {
+	color: var(--green);
+
+	text-shadow:
+		0 0 15px rgba(0, 255, 102, 0.6),
+		0 0 50px rgba(0, 255, 102, 0.25);
+}
+
+.boot-subtitle {
+	margin: 20px 0 28px;
+
+	color: #79837d;
+	font-size: 12px;
+	line-height: 1.8;
+}
+
+.main-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 20px;
+
+	padding: 16px 25px;
+
+	border: 1px solid var(--green);
+	background: rgba(0, 255, 102, 0.08);
+
+	color: var(--green);
+
+	font:
+		13px "Share Tech Mono",
+		monospace;
+	letter-spacing: 1px;
+
+	cursor: pointer;
+
+	box-shadow:
+		0 0 25px rgba(0, 255, 102, 0.1),
+		inset 0 0 20px rgba(0, 255, 102, 0.04);
+
+	transition: 0.3s;
+}
+
+.main-btn b {
+	font-size: 18px;
+}
+
+.main-btn:hover {
+	color: #000;
+	background: var(--green);
+	transform: translateY(-3px);
+	box-shadow: 0 10px 40px rgba(0, 255, 102, 0.25);
+}
+
+.boot-footer {
+	display: flex;
+	justify-content: center;
+	gap: 30px;
+
+	margin-top: 30px;
+
+	color: #414b45;
+	font:
+		9px "Share Tech Mono",
+		monospace;
+	letter-spacing: 1px;
+}
+
+@keyframes blink {
+	50% {
+		opacity: 0.2;
+	}
+}
+
+/* =========================================================
+   SCENE 2 — DECRYPTION
+========================================================= */
+
+#scene-decrypt {
+	background: #000;
+}
+
+.decrypt-photo {
+	position: absolute;
+	inset: -20px;
+	width: calc(100% + 40px);
+	height: calc(100% + 40px);
+	object-fit: cover;
+
+	filter: grayscale(1) blur(9px) brightness(0.25);
+
+	transform: scale(1.08);
+}
+
+.decrypt-vignette {
+	position: absolute;
+	inset: 0;
+
+	background:
+		radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.7) 80%),
+		rgba(0, 255, 102, 0.03);
+}
+
+.decrypt-interface {
+	position: relative;
+	z-index: 3;
+
+	width: min(850px, 90%);
+
+	font-family: "Share Tech Mono", monospace;
+}
+
+.scan-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	margin-bottom: 20px;
+}
+
+.eyebrow {
+	color: var(--green);
+	font:
+		10px "Share Tech Mono",
+		monospace;
+	letter-spacing: 3px;
+}
+
+.scan-header h2 {
+	margin-top: 8px;
+	font:
+		3.5rem/0.8 "Bebas Neue",
+		sans-serif;
+	letter-spacing: 2px;
+}
+
+.scan-header h2 strong {
+	color: var(--green);
+}
+
+.scan-icon {
+	position: relative;
+
+	width: 70px;
+	height: 70px;
+
+	display: grid;
+	place-items: center;
+
+	color: var(--green);
+	font-size: 25px;
+}
+
+.scan-ring {
+	position: absolute;
+	inset: 0;
+
+	border: 1px solid rgba(0, 255, 102, 0.4);
+	border-radius: 50%;
+
+	animation: spin 4s linear infinite;
+}
+
+.scan-ring::before,
+.scan-ring::after {
+	content: "";
+	position: absolute;
+	inset: 8px;
+
+	border: 1px dashed rgba(0, 255, 102, 0.3);
+	border-radius: 50%;
+}
+
+.scan-ring::after {
+	inset: 18px;
+	border-color: var(--green);
+	border-left-color: transparent;
+}
+
+@keyframes spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.face-scan {
+	position: relative;
+
+	width: 100%;
+	height: 260px;
+
+	border: 1px solid rgba(0, 255, 102, 0.3);
+
+	background:
+		linear-gradient(rgba(0, 255, 102, 0.035) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(0, 255, 102, 0.035) 1px, transparent 1px);
+
+	background-size: 30px 30px;
+
+	overflow: hidden;
+}
+
+.scan-line {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+
+	height: 2px;
+
+	background: var(--green);
+	box-shadow: 0 0 25px 4px rgba(0, 255, 102, 0.6);
+
+	animation: scanMove 2.5s linear infinite;
+}
+
+@keyframes scanMove {
+	0% {
+		top: 0;
+	}
+	100% {
+		top: 100%;
+	}
+}
+
+.corner {
+	position: absolute;
+	width: 30px;
+	height: 30px;
+	border-color: var(--green);
+	z-index: 2;
+}
+
+.top-left {
+	top: 20px;
+	left: 20px;
+	border-top: 2px solid;
+	border-left: 2px solid;
+}
+
+.top-right {
+	top: 20px;
+	right: 20px;
+	border-top: 2px solid;
+	border-right: 2px solid;
+}
+
+.bottom-left {
+	bottom: 20px;
+	left: 20px;
+	border-bottom: 2px solid;
+	border-left: 2px solid;
+}
+
+.bottom-right {
+	bottom: 20px;
+	right: 20px;
+	border-bottom: 2px solid;
+	border-right: 2px solid;
+}
+
+.target {
+	position: absolute;
+	inset: 0;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	color: rgba(0, 255, 102, 0.7);
+}
+
+.target span {
+	font-size: 9px;
+	letter-spacing: 4px;
+}
+
+.target strong {
+	margin-top: 8px;
+	font-size: clamp(4rem, 12vw, 7rem);
+
+	color: rgba(0, 255, 102, 0.08);
+
+	-webkit-text-stroke: 1px rgba(0, 255, 102, 0.35);
+
+	letter-spacing: 8px;
+}
+
+.scan-coordinates {
+	position: absolute;
+	right: 25px;
+	bottom: 20px;
+
+	color: rgba(0, 255, 102, 0.5);
+
+	font-size: 9px;
+	line-height: 1.7;
+	text-align: right;
+}
+
+.decrypt-panel {
+	margin-top: 20px;
+}
+
+.decrypt-heading {
+	display: flex;
+	justify-content: space-between;
+
+	margin-bottom: 8px;
+
+	color: #87958d;
+	font-size: 10px;
+	letter-spacing: 2px;
+}
+
+.decrypt-heading strong {
+	color: var(--green);
+}
+
+.decrypt-progress {
+	width: 100%;
+	height: 5px;
+
+	background: rgba(0, 255, 102, 0.08);
+}
+
+#progress-bar {
+	width: 0;
+	height: 100%;
+
+	background: var(--green);
+
+	box-shadow: 0 0 15px var(--green);
+
+	transition: width 0.1s linear;
+}
+
+.decrypt-lines {
+	min-height: 130px;
+
+	padding-top: 18px;
+
+	color: #8bcda4;
+	font-size: 12px;
+	line-height: 2;
+}
+
+.decrypt-lines div {
+	opacity: 0;
+	animation: lineIn 0.4s forwards;
+}
+
+@keyframes lineIn {
+	from {
+		opacity: 0;
+		transform: translateX(-10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+.access-btn {
+	width: 100%;
+
+	padding: 18px;
+
+	border: 1px solid var(--green);
+	background: var(--green);
+
+	color: #000;
+
+	font:
+		700 13px "Share Tech Mono",
+		monospace;
+	letter-spacing: 2px;
+
+	cursor: pointer;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	box-shadow: 0 0 40px rgba(0, 255, 102, 0.2);
+
+	animation: accessPulse 1.5s infinite;
+}
+
+@keyframes accessPulse {
+	50% {
+		box-shadow: 0 0 60px rgba(0, 255, 102, 0.45);
+	}
+}
+
+/* =========================================================
+   SCENE 3 — HERO
+========================================================= */
+
+#scene-reveal {
+	overflow: hidden;
+	align-items: flex-start;
+}
+
+.hero {
+	position: relative;
+
+	width: 100%;
+	min-height: 100vh;
+
+	overflow-y: auto;
+	overflow-x: hidden;
+
+	scroll-behavior: smooth;
+}
+
+.hero-photo {
+	position: fixed;
+	inset: 0;
+
+	width: 100%;
+	height: 100%;
+
+	object-fit: cover;
+
+	z-index: 0;
+
+	animation: heroZoom 15s ease-in-out infinite alternate;
+}
+
+@keyframes heroZoom {
+	to {
+		transform: scale(1.08);
+	}
+}
+
+.hero-color {
+	position: fixed;
+	inset: 0;
+	z-index: 1;
+
+	background: linear-gradient(
+		180deg,
+		rgba(0, 0, 0, 0.35) 0%,
+		rgba(0, 0, 0, 0.25) 25%,
+		rgba(0, 0, 0, 0.92) 75%,
+		#020202 100%
+	);
+
+	pointer-events: none;
+}
+
+.hero-vignette {
+	position: fixed;
+	inset: 0;
+	z-index: 2;
+
+	background: radial-gradient(
+		circle at 50% 30%,
+		transparent 10%,
+		rgba(0, 0, 0, 0.65) 80%
+	);
+
+	pointer-events: none;
+}
+
+#particle-canvas,
+#confetti-canvas {
+	position: fixed;
+	inset: 0;
+
+	width: 100%;
+	height: 100%;
+
+	pointer-events: none;
+}
+
+#particle-canvas {
+	z-index: 3;
+}
+
+#confetti-canvas {
+	z-index: 8;
+}
+
+.hero-content {
+	position: relative;
+	z-index: 5;
+
+	min-height: 100vh;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	padding: 100px 20px 280px;
+
+	text-align: center;
+}
+
+.hero-kicker {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+
+	color: white;
+
+	font:
+		12px "Share Tech Mono",
+		monospace;
+	letter-spacing: 7px;
+
+	opacity: 0;
+
+	animation: heroFade 0.8s 0.3s forwards;
+}
+
+.hero-kicker span {
+	width: 30px;
+	height: 1px;
+	background: var(--gold);
+	box-shadow: 0 0 8px var(--gold);
+}
+
+.birthday-title {
+	margin-top: 15px;
+
+	display: flex;
+	flex-direction: column;
+
+	font:
+		7rem/0.75 "Bebas Neue",
+		sans-serif;
+
+	letter-spacing: 3px;
+
+	color: var(--gold);
+
+	text-shadow:
+		0 0 8px var(--gold),
+		0 0 25px #ff6a00,
+		0 0 60px rgba(255, 69, 0, 0.7),
+		0 15px 50px rgba(0, 0, 0, 0.8);
+
+	transform: scale(2);
+	filter: blur(15px);
+	opacity: 0;
+
+	animation:
+		birthdaySlam 1.2s cubic-bezier(0.17, 0.89, 0.32, 1.28) 1s forwards,
+		titleGlow 2s 2.5s infinite alternate;
+}
+
+.birthday-title span:last-child {
+	color: white;
+	-webkit-text-stroke: 1px var(--gold);
+}
+
+@keyframes birthdaySlam {
+	0% {
+		opacity: 0;
+		transform: scale(2);
+		filter: blur(15px);
+	}
+
+	60% {
+		opacity: 1;
+		transform: scale(0.94);
+		filter: blur(0);
+	}
+
+	80% {
+		transform: scale(1.04);
+	}
+
+	100% {
+		opacity: 1;
+		transform: scale(1);
+		filter: blur(0);
+	}
+}
+
+@keyframes titleGlow {
+	to {
+		text-shadow:
+			0 0 12px var(--gold),
+			0 0 35px #ff6a00,
+			0 0 90px rgba(255, 69, 0, 0.8);
+	}
+}
+
+.name-wrapper {
+	margin-top: 22px;
+	min-height: 32px;
+}
+
+.name-text {
+	display: inline-block;
+
+	color: var(--green);
+
+	font-size: 17px;
+	font-weight: 900;
+
+	letter-spacing: 7px;
+
+	text-shadow:
+		0 0 10px var(--green),
+		0 0 30px rgba(0, 255, 102, 0.5);
+
+	border-right: 2px solid var(--green);
+
+	padding-right: 6px;
+}
+
+.hero-message {
+	margin-top: 18px;
+
+	color: rgba(255, 255, 255, 0.7);
+
+	font-size: 12px;
+	line-height: 1.8;
+	letter-spacing: 1px;
+
+	opacity: 0;
+
+	animation: heroFade 1s 3.2s forwards;
+}
+
+@keyframes heroFade {
+	to {
+		opacity: 1;
+	}
+}
+
+/* =========================================================
+   FLOATING LABELS
+========================================================= */
+
+.floating-label {
+	position: fixed;
+	z-index: 6;
+
+	padding: 8px 12px;
+
+	border: 1px solid rgba(0, 255, 102, 0.2);
+
+	background: rgba(0, 0, 0, 0.4);
+	backdrop-filter: blur(10px);
+
+	color: rgba(255, 255, 255, 0.55);
+
+	font:
+		9px "Share Tech Mono",
+		monospace;
+	letter-spacing: 2px;
+}
+
+.label-one {
+	left: 25px;
+	top: 50%;
+}
+
+.label-two {
+	right: 25px;
+	top: 50%;
+}
+
+.label-one span {
+	display: inline-block;
+
+	width: 6px;
+	height: 6px;
+
+	margin-right: 5px;
+
+	background: var(--green);
+	border-radius: 50%;
+	box-shadow: 0 0 8px var(--green);
+}
+
+.label-two span {
+	color: var(--green);
+}
+
+/* =========================================================
+   COMMAND CENTER
+========================================================= */
+
+.command-center {
+	position: relative;
+	z-index: 20;
+
+	width: min(920px, calc(100% - 30px));
+
+	margin: -180px auto 0;
+
+	padding: 30px 0 70px;
+
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 15px;
+
+	opacity: 0;
+	transform: translateY(80px);
+
+	animation: dashboardIn 1s 5.5s forwards;
+}
+
+@keyframes dashboardIn {
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.dashboard-header {
+	grid-column: 1 / -1;
+
+	display: flex;
+	align-items: end;
+	justify-content: space-between;
+
+	padding: 15px 5px 5px;
+
+	border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dashboard-header h2 {
+	margin-top: 6px;
+
+	font:
+		2.4rem/0.8 "Bebas Neue",
+		sans-serif;
+	letter-spacing: 2px;
+}
+
+.dashboard-header h2 strong {
+	color: var(--green);
+}
+
+.online-status {
+	color: var(--green);
+	font:
+		10px "Share Tech Mono",
+		monospace;
+}
+
+.online-status i {
+	display: inline-block;
+
+	width: 6px;
+	height: 6px;
+
+	margin-right: 5px;
+
+	background: var(--green);
+	border-radius: 50%;
+
+	box-shadow: 0 0 8px var(--green);
+}
+
+.info-card {
+	position: relative;
+
+	padding: 22px;
+
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 14px;
+
+	background: linear-gradient(
+		135deg,
+		rgba(18, 22, 19, 0.88),
+		rgba(4, 7, 5, 0.78)
+	);
+
+	backdrop-filter: blur(18px);
+
+	box-shadow:
+		0 20px 60px rgba(0, 0, 0, 0.4),
+		inset 0 1px rgba(255, 255, 255, 0.05);
+
+	overflow: hidden;
+
+	transition:
+		transform 0.35s,
+		border-color 0.35s;
+}
+
+.info-card:hover {
+	transform: translateY(-5px);
+	border-color: rgba(0, 255, 102, 0.35);
+}
+
+.money-card {
+	border-color: rgba(0, 255, 102, 0.25);
+}
+
+.card-glow {
+	position: absolute;
+
+	width: 150px;
+	height: 150px;
+
+	right: -80px;
+	top: -80px;
+
+	background: var(--green);
+	filter: blur(80px);
+
+	opacity: 0.08;
+}
+
+.card-top {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+
+	position: relative;
+	z-index: 2;
+}
+
+.card-symbol {
+	width: 42px;
+	height: 42px;
+
+	display: grid;
+	place-items: center;
+
+	border: 1px solid rgba(0, 255, 102, 0.3);
+	border-radius: 10px;
+
+	color: var(--green);
+	background: rgba(0, 255, 102, 0.05);
+
+	font-size: 20px;
+}
+
+.card-label {
+	display: block;
+
+	color: #657069;
+
+	font:
+		9px "Share Tech Mono",
+		monospace;
+	letter-spacing: 2px;
+}
+
+.card-top h3 {
+	margin-top: 4px;
+
+	font:
+		1.35rem "Bebas Neue",
+		sans-serif;
+	letter-spacing: 1px;
+}
+
+.card-number {
+	margin-left: auto;
+
+	color: #38443d;
+	font:
+		11px "Share Tech Mono",
+		monospace;
+}
+
+.account-details {
+	margin-top: 22px;
+
+	display: grid;
+	gap: 12px;
+}
+
+.account-details > div {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+}
+
+.account-details span {
+	color: #657069;
+	font:
+		8px "Share Tech Mono",
+		monospace;
+	letter-spacing: 2px;
+}
+
+.account-details strong {
+	color: #ddd;
+	font-size: 12px;
+}
+
+.account-number strong {
+	color: var(--green);
+	font-size: 19px;
+	letter-spacing: 2px;
+}
+
+.card-btn {
+	width: 100%;
+
+	margin-top: 20px;
+	padding: 12px;
+
+	border: 1px solid rgba(0, 255, 102, 0.4);
+	border-radius: 7px;
+
+	background: rgba(0, 255, 102, 0.06);
+
+	color: var(--green);
+
+	font:
+		10px "Share Tech Mono",
+		monospace;
+	letter-spacing: 1px;
+
+	cursor: pointer;
+
+	transition: 0.3s;
+}
+
+.card-btn:hover {
+	background: var(--green);
+	color: #000;
+}
+
+/* =========================================================
+   TIPS
+========================================================= */
+
+.tips-grid {
+	display: grid;
+	gap: 10px;
+
+	margin-top: 20px;
+}
+
+.tip {
+	display: grid;
+	grid-template-columns: 28px 1fr;
+	gap: 10px;
+
+	padding: 10px;
+
+	background: rgba(255, 255, 255, 0.025);
+	border-radius: 7px;
+
+	transition: 0.3s;
+}
+
+.tip:hover {
+	background: rgba(0, 255, 102, 0.05);
+}
+
+.tip > span {
+	color: var(--green);
+	font:
+		10px "Share Tech Mono",
+		monospace;
+}
+
+.tip p {
+	color: #b6bdb8;
+	font-size: 11px;
+	line-height: 1.5;
+}
+
+/* =========================================================
+   QUOTE
+========================================================= */
+
+.quote-card {
+	grid-column: 1 / -1;
+
+	padding: 30px;
+}
+
+.quote-mark {
+	position: absolute;
+	right: 20px;
+	top: 5px;
+
+	color: rgba(255, 210, 31, 0.08);
+
+	font:
+		9rem "Bebas Neue",
+		sans-serif;
+}
+
+.quote-card blockquote {
+	position: relative;
+	z-index: 2;
+
+	max-width: 700px;
+
+	margin-top: 15px;
+
+	color: white;
+
+	font:
+		1.7rem/1.25 "Bebas Neue",
+		sans-serif;
+	letter-spacing: 1px;
+}
+
+.quote-author {
+	margin-top: 15px;
+
+	color: var(--gold);
+
+	font:
+		10px "Share Tech Mono",
+		monospace;
+	letter-spacing: 3px;
+}
+
+/* =========================================================
+   SHARE
+========================================================= */
+
+.share-btn {
+	grid-column: 1 / -1;
+
+	width: 100%;
+
+	display: flex;
+	align-items: center;
+	gap: 15px;
+
+	padding: 18px 20px;
+
+	border: 1px solid var(--gold);
+	border-radius: 10px;
+
+	background: linear-gradient(
+		90deg,
+		rgba(255, 210, 31, 0.16),
+		rgba(255, 210, 31, 0.04)
+	);
+
+	color: var(--gold);
+
+	text-align: left;
+
+	cursor: pointer;
+
+	transition: 0.3s;
+}
+
+.share-btn:hover {
+	background: var(--gold);
+	color: #000;
+	transform: translateY(-3px);
+	box-shadow: 0 15px 40px rgba(255, 210, 31, 0.15);
+}
+
+.share-icon {
+	width: 38px;
+	height: 38px;
+
+	display: grid;
+	place-items: center;
+
+	border: 1px solid currentColor;
+	border-radius: 50%;
+
+	font-size: 20px;
+}
+
+.share-btn div {
+	flex: 1;
+}
+
+.share-btn small {
+	display: block;
+
+	font:
+		8px "Share Tech Mono",
+		monospace;
+	letter-spacing: 2px;
+	opacity: 0.7;
+}
+
+.share-btn strong {
+	display: block;
+
+	margin-top: 2px;
+
+	font:
+		1.15rem "Bebas Neue",
+		sans-serif;
+	letter-spacing: 1px;
+}
+
+.share-btn > b {
+	font-size: 20px;
+}
+
+.dashboard-footer {
+	grid-column: 1 / -1;
+
+	text-align: center;
+
+	color: #3d4741;
+
+	font:
+		8px "Share Tech Mono",
+		monospace;
+	letter-spacing: 2px;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+	.music-toggle {
+		width: 45px;
+		height: 45px;
+
+		top: 12px;
+		right: 12px;
+	}
+
+	.terminal-body {
+		min-height: 170px;
+		padding: 18px;
+	}
+
+	.terminal-time {
+		display: none;
+	}
+
+	.boot-title {
+		margin-top: 28px;
+	}
+
+	.boot-title > span {
+		font-size: 9px;
+		letter-spacing: 5px;
+	}
+
+	.boot-title h1 {
+		font-size: 4rem;
+	}
+
+	.boot-subtitle {
+		font-size: 10px;
+	}
+
+	.main-btn {
+		width: 100%;
+		justify-content: space-between;
+	}
+
+	.boot-footer {
+		gap: 10px;
+		font-size: 7px;
+	}
+
+	.scan-header h2 {
+		font-size: 2.8rem;
+	}
+
+	.scan-icon {
+		width: 50px;
+		height: 50px;
+	}
+
+	.face-scan {
+		height: 210px;
+	}
+
+	.target strong {
+		font-size: 4.5rem;
+	}
+
+	.birthday-title {
+		font-size: 4.5rem;
+	}
+
+	.hero-kicker {
+		font-size: 9px;
+		letter-spacing: 4px;
+	}
+
+	.name-text {
+		font-size: 12px;
+		letter-spacing: 4px;
+	}
+
+	.hero-message {
+		font-size: 10px;
+	}
+
+	.floating-label {
+		display: none;
+	}
+
+	.command-center {
+		width: calc(100% - 20px);
+		grid-template-columns: 1fr;
+		margin-top: -130px;
+		padding-bottom: 50px;
+	}
+
+	.dashboard-header,
+	.quote-card,
+	.share-btn,
+	.dashboard-footer {
+		grid-column: auto;
+	}
+
+	.dashboard-header {
+		align-items: flex-start;
+	}
+
+	.dashboard-header h2 {
+		font-size: 2rem;
+	}
+
+	.online-status {
+		margin-top: 10px;
+	}
+
+	.info-card {
+		padding: 17px;
+	}
+
+	.quote-card blockquote {
+		font-size: 1.4rem;
+	}
+}
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+	.boot-title h1 {
+		font-size: 3.4rem;
+	}
+
+	.birthday-title {
+		font-size: 3.8rem;
+	}
+
+	.hero-content {
+		padding-left: 12px;
+		padding-right: 12px;
+	}
+
+	.face-scan {
+		height: 180px;
+	}
+
+	.decrypt-interface {
+		width: 94%;
+	}
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+}
